@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>Administrador</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" 
+  rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+  integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+</head>
+
+<body>
+  <nav class='navbar navbar-lg navbar-dark bg-dark'>
+    <div class="container-fluid">
+      <div class="col-lg-6">
+        <img src="../../favicon.ico" width="30" height="30" class="my-1">
+        <a href="#" class="navbar-brand ml-auto text-light"> Sistema de Monitoreo de Signos Vitales </a> <br />
+        <input type="checkbox" id="sonido" value="1" class="text-light">
+        <a class="text-warning"> Habilitar sonido </a>
+      </div>
+      <div class="col-lg-6" align='right'>
+        <div class="col-lg-3">
+          <a class="text-light" id=nombreUsuario></a>
+        </div>
+        <div class="col-lg-3">
+          <button class="btn btn-outline-secondary ml-1" type="submit" id='logout-btn'> Cerrar Sesion </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container my-2" id=containerAlertas>
+    <div class="card my-2 mx-0" id="alertas">
+      <div class="card-body" id='alertas-card'>
+        <h4 class="card-title display-4 text-danger">ALERTAS</h4>
+        <table class="table table-striped" id='alertasTable' align='center'>
+        </table>
+      </div>
+    </div>
+    <div class="card my-2 mx-0" id='detalleAlerta' name="detalleAlerta">
+      <div class="card-body">
+        <div class="row">
+          <div class="col md-7">
+            <h5 class="text-danger">Detalle de Alerta </h5>
+            <h5 class='card-title' id='nombrePacienteAlerta'></h5>
+            <h6 class='card-subtitle' id='condicionPacienteAlerta'></h6>
+            <img src="../Multimedia/ubicacion.png" width="30" height="30" class="my-1">
+            <a id="urlgooglemaps"> </a>
+          </div>
+          <div class="col md-1">
+            <div class="container-fluid" align='right'>
+              <a href="#" class='text-warning' id='verRegistrosPaciente'>Ver registros paciente</a> </br>
+              <a href="#" class='text-muted' id='ocultarDetalleAlerta'>Ocultar detalle</a> </br>
+              <button class="btn btn-danger" id="resolverAlerta">RESOLVER</button>
+            </div>
+          </div>
+          <table class='table table-striped'>
+            <thead>
+              <th>FECHA Y HORA</th>
+              <th>PULSO CARDÍACO</th>
+              <th>PRESIÓN ARTERIAL</th>
+              <th>TEMPERATURA</th>
+            </thead>
+            <tbody id="infoAlerta">
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container-fluid" id="infoPaciente" name=infoPaciente>
+    <div class="card">
+      <div class="card-body">
+        <a class="text-success font-weight-light" id="cerrarPaciente"> Cerrar información del paciente </a>
+        <h4 class="card-title" align='left' id="info-nombre"> <i>No se ha seleccionado un paciente</i> </h4>
+        <h5 clase="card-subtitle" id='info-condicion'> </h5>
+        <table class='table mt-2 table-responsive' style="overflow: scroll" id="tablaRegistros">
+          <thead>
+            <tr>
+              <th scope='col'>Fecha y hora</th>
+              <th scope='col'>Presion Arterial</th>
+              <th scope='col'>Pulso Cardíaco</th>
+              <th scope='col'>Temperatura</th>
+              <th scope='col'>Alerta</th>
+            </tr>
+          </thead>
+          <tbody align='center' id='registrosPaciente'>
+          </tbody>
+        </table>
+        <h6 class="bg-danger text-light" id='noRegistros'>No hay registros disponibles</h6>
+      </div>
+    </div>
+  </div>
+
+  <div class="container-fluid my-2" align='center'>
+    <div class="card bg-dark text-light">
+      <div class="card-body">
+        <h5 class="title" align='center'>PACIENTES</h5>
+        <form class="form-inline my-lg-2">
+          <div class="row">
+            <div class="col-md-10">
+              <input type="search" id="buscar" class="form-control mr-4" placeholder="Introduzca Nombre, Apellido o ID">
+            </div>
+            <div class="col-md-1">
+              <button class="btn btn-outline-info btn-block" type="submit" id='ver-todos' href='index.html#pacientes'
+               style="font-size:12px"> Ver todos </button>
+              <button class="btn btn-outline-warning btn-block" type="submit" id='ocultar' style="font-size:12px"> Ocultar </button>
+            </div>
+            <div class="col-md-1">
+              <button class="btn btn-info btn-block" type="submit" id='agregarPaciente' style="font-size:12px"> Agregar Paciente </button>
+            </div>
+          </div>
+        </form>
+        <table class='table table-striped text-light' id='pacientes' style="overflow:scroll;"></table>
+      </div>
+    </div>
+    <div class="card" id='agregarPacienteForm'>
+      <div class="card-body">
+        <form class="form-inline">
+          <input type="text" id="nombrePaciente" class="form-control mr-4" placeholder="Nombre" />
+          <input type="text" id="apellidoPaciente" class="form-control mr-4" placeholder="Apellido" />
+          <input type="text" id="condicionPaciente" class="form-control mr-4" placeholder="Condición" />
+          <input type="text" id="usuario" class="form-control mr-4" placeholder="Nombre de usuario" />
+          <input type="password" id="contrasena1" class="form-control mr-4" placeholder="Contraseña" />
+          <input type="password" id="contrasena2" class="form-control mr-4" placeholder="Confirmar contraseña" />
+          <input type="submit" id='agregar' class="btn btn-outline-warning" value="Agregar">
+          <input type="submit" id='cancelar' class="btn btn-outline-danger" value="Cancelar">
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <audio id="notificacion">
+    <source src="../Multimedia/notificacion.mp3" type="audio/mpeg">
+  </audio>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+
+  crossorigin="anonymous"></script>
+
+  <script src='../Administrador/administrador.js'>
+  </script>
+
+</body>
+
+</html>
